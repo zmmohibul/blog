@@ -1,1 +1,24 @@
+### Get All Users
 GET https://localhost:5001/api/auth/allusers
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJ6YWhpbiIsIm5iZiI6MTY1NDExMzQ3OSwiZXhwIjoxNjU0NzE4Mjc5LCJpYXQiOjE2NTQxMTM0Nzl9.qgswQy1834qFdkhmMl7S_22Qr-ar9uBu12heyM9tEixE5V6Cdfw9X52r7JFFDlgNoX4mn-twdyils3vuVHHuVQ
+
+
+
+### Register new user
+POST https://localhost:5001/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "zahin",
+    "password": "strong"
+}
+
+
+### Existing user Login
+POST https://localhost:5001/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "zahin",
+    "password": "strong"
+}
