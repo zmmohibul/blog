@@ -56,6 +56,8 @@ namespace API.Controllers
                 return BadRequest(new Error {statusCode = 400, Message = "Username is taken"});
             }
 
+            
+
             var user = _mapper.Map<User>(registerDto);
 
             using var hmac = new HMACSHA512();

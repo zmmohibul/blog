@@ -22,21 +22,44 @@
       >
         <!-- Left links -->
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="mr-2 nav-item">
-            <a 
+          <ng-container *ngIf="(currentUser$ | async) === null">
+            <li class="mr-2 nav-item">
+              <a 
+                  class="nav-link"
+                  routerLink="/" 
+                  routerLinkActive="active" 
+                  [routerLinkActiveOptions]="{ exact: true }">
+                  The Blog
+              </a>
+            </li>
+            <li class="mx-2 nav-item">
+              <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+            </li>
+            <li class="ml-2 nav-item">
+              <a class="nav-link" tabindex="-1" routerLink="/register" routerLinkActive="active">Register</a>
+            </li>
+          </ng-container>
+
+          <ng-container *ngIf="(currentUser$ | async)">
+            <li class="mr-2 nav-item">
+              <a 
                 class="nav-link"
-                routerLink="/" 
+                routerLink="/posts" 
                 routerLinkActive="active" 
-                [routerLinkActiveOptions]="{ exact: true }">
+              >
                 The Blog
-            </a>
-          </li>
-          <li class="mx-2 nav-item">
-            <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
-          </li>
-          <li class="ml-2 nav-item">
-            <a class="nav-link" tabindex="-1" routerLink="/register" routerLinkActive="active">Register</a>
-          </li>
+              </a>
+            </li>
+            <li class="mx-1 nav-item">
+              <a class="nav-link" routerLink="/login" routerLinkActive="active">Events</a>
+            </li>
+            <li class="mx-1 nav-item">
+              <a class="nav-link" tabindex="-1" routerLink="/register" routerLinkActive="active">Messages</a>
+            </li>
+            <li class="mx-1 nav-item">
+              <a class="nav-link" tabindex="-1" (click)="onLogout()">Logout</a>
+            </li>
+          </ng-container>
         </ul>
         <!-- Left links -->
       </div>

@@ -1,6 +1,6 @@
 <h1 class="text-center my-5">Register</h1>
 <div class="mx-5 mt-2 ">
-  <form [formGroup]="authForm">
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
     <app-input label="Username" plain-Type="text" [control]="authForm.get('username')"></app-input>
     <div class="my-3" *ngIf="authForm.get('username').touched && authForm.get('username').dirty && authForm.get('username').errors &&  authForm.get('username').errors.pattern">
       <p class="note note-danger">
@@ -17,14 +17,14 @@
     
     <app-plain-input label="Confirm Password" inputType="password" [control]="authForm.get('passwordConfirmation')"></app-plain-input>
 
-    <div class="my-3" *ngIf="authForm.get('password').touched && authForm.get('password').dirty && authForm.get('passwordConfirmation').touched && authForm.get('passwordConfirmation').dirty && authForm.errors && authForm.errors.passwordsDontMatch">
+    <div class="my-3" *ngIf="authForm.get('passwordConfirmation').touched && authForm.get('passwordConfirmation').dirty && authForm.errors && authForm.errors.passwordsDontMatch">
       <p class="note note-danger">
         <strong>Password Error:</strong> Password & Confirm Password does not match
       </p>
     </div>
 
     <div class="text-center">
-      <button type="button" class="text-center btn btn-lg btn-dark btn-rounded  ">Register</button>
+      <button type="submit" class="text-center btn btn-lg btn-dark btn-rounded ">Register</button>
     </div>
 
   </form>

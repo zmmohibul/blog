@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService, RegisterCredentials } from '../auth.service';
 import { MatchPassword } from '../validators/match-password';
 import { UsernameExists } from '../validators/username-exists';
 
@@ -39,9 +41,30 @@ export class RegisterComponent implements OnInit {
     )
   }, { validators: this.matchPassword.validate })
 
-  constructor(private matchPassword: MatchPassword, private usernameExists: UsernameExists) { }
+  constructor(private matchPassword: MatchPassword, private usernameExists: UsernameExists, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+    if (this.authForm.invalid) {
+      return;
+    }
+
+    const credential: RegisterCredentials = {
+      username: this.authForm.get('username').value,
+      password:  this.authForm.get('username').value
+    }
+
+    this.authService.register(credential).subscribe({
+      next: response => {
+        console.log(response);
+        this.router.navigateByUrl("/posts");
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 
 

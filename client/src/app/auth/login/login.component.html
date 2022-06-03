@@ -1,22 +1,25 @@
 <h1 class="text-center my-5">Login</h1>
 <div class="mx-5 mt-2 ">
-  <form >
-    <mdb-form-control class="mb-4">
-      <input mdbInput type="text" id="formControlLg" class="form-control form-control-lg" />
-      <label mdbLabel class="form-label" for="formControlLg">Username</label>
-    </mdb-form-control>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <app-input label="Username" plain-Type="text" [control]="loginForm.get('username')"></app-input>
 
-    <mdb-form-control class="mb-4">
-      <input mdbInput type="text" id="formControlLg" class="form-control form-control-lg" />
-      <label mdbLabel class="form-label" for="formControlLg">Password</label>
-    </mdb-form-control>
+    <app-input label="Password" plain-Type="password" [control]="loginForm.get('password')"></app-input>
+
+    <div class="my-3" *ngIf="loginForm.errors && loginForm.errors.invalidCredential">
+      <p class="note note-danger">
+        <strong>Error:</strong> Invalid username or password
+      </p>
+    </div>
+
+    <div class="my-3" *ngIf="loginForm.errors && loginForm.errors.somethingWentWrong">
+      <p class="note note-danger">
+        <strong>Error:</strong> Something went wrong. Failed to login.
+      </p>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="text-center btn btn-lg btn-dark btn-rounded">Login</button>
+    </div>
   </form>
   
 </div>
-
-
-<!-- <app-plain-input label="Confirm Password" inputType="password" [control]="authForm.get('passwordConfirmation')"></app-plain-input>
-<div *ngIf="authForm.errors.passwordsDontMatch">
-  <p class="note note-danger">
-    <strong>Password Error:</strong> Password and Confirm Password does not match
-  </p> -->
