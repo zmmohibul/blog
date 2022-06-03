@@ -21,7 +21,7 @@
       {{ control.errors.maxlength.requiredLength }}
       characters
     </p>
-    <p class="note note-danger" *ngIf="control.errors.nonUniqueUsername">
+    <p class="note note-danger" *ngIf="control.errors.usernameExists">
       <strong>{{ label }} Error:</strong> Username is taken
     </p>
     <p class="note note-danger" *ngIf="control.errors.noConnection">

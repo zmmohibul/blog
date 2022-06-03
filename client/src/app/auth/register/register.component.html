@@ -15,13 +15,6 @@
       </p>
     </div>
     
-
-    <!-- <mdb-form-control class="mb-4">
-      <input formControlName="passwordConfirmation" mdbInput type="text" id="formControlLg" class="form-control form-control-lg" autocomplete="off" />
-      <label mdbLabel class="form-label" for="formControlLg">Confirm Password</label>
-    </mdb-form-control> -->
-
-
     <app-plain-input label="Confirm Password" inputType="password" [control]="authForm.get('passwordConfirmation')"></app-plain-input>
 
     <div class="my-3" *ngIf="authForm.get('password').touched && authForm.get('password').dirty && authForm.get('passwordConfirmation').touched && authForm.get('passwordConfirmation').dirty && authForm.errors && authForm.errors.passwordsDontMatch">
@@ -35,5 +28,8 @@
     </div>
 
   </form>
+
+  <br><br>
+  {{ authForm.get('username').errors | json }}
   
 </div>
