@@ -1,0 +1,30 @@
+<mdb-form-control class="my-4">
+    <input mdbInput  [type]="inputType" [formControl]="control" id="formControlLg" class="form-control form-control-lg" autocomplete="off" />
+    <label mdbLabel class="form-label" for="formControlLg">{{ label }}</label>
+</mdb-form-control>
+
+<div *ngIf="showErrors()" class="my-3">
+    <p class="note note-danger" *ngIf="control.errors.required">
+      <strong>{{ label }} Error:</strong> Value is required
+    </p>
+    <p class="note note-danger" *ngIf="control.errors.minlength">
+      <strong>{{ label }} Error:</strong> Value you entered is
+      {{ control.errors.minlength.actualLength }}
+      characters long, but it must be at aleast
+      {{ control.errors.minlength.requiredLength }}
+      characters
+    </p>
+    <p class="note note-danger" *ngIf="control.errors.maxlength">
+      <strong>{{ label }} Error:</strong> Value you entered is
+      {{ control.errors.maxlength.actualLength }}
+      characters long, but it cannot be longer than
+      {{ control.errors.maxlength.requiredLength }}
+      characters
+    </p>
+    <p class="note note-danger" *ngIf="control.errors.nonUniqueUsername">
+      <strong>{{ label }} Error:</strong> Username is taken
+    </p>
+    <p class="note note-danger" *ngIf="control.errors.noConnection">
+      <strong>{{ label }} Error:</strong> Can't tell if username is taken
+    </p>
+  </div>

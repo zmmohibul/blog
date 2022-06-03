@@ -1,0 +1,39 @@
+<h1 class="text-center my-5">Register</h1>
+<div class="mx-5 mt-2 ">
+  <form [formGroup]="authForm">
+    <app-input label="Username" plain-Type="text" [control]="authForm.get('username')"></app-input>
+    <div class="my-3" *ngIf="authForm.get('username').touched && authForm.get('username').dirty && authForm.get('username').errors &&  authForm.get('username').errors.pattern">
+      <p class="note note-danger">
+        <strong>Username Error:</strong> Username may contain only letters, numbers and underscoressymbol
+      </p>
+    </div>
+
+    <app-plain-input label="Password" inputType="password" [control]="authForm.get('password')"></app-plain-input>
+    <div class="my-3" *ngIf="authForm.get('password').touched && authForm.get('password').dirty && authForm.get('password').errors && authForm.get('password').errors.pattern ">
+      <p class="note note-danger">
+        <strong>Password Error:</strong> Password must be at least 6 letters and contain 1 uppercase, 1 lowercase and 1 symbol
+      </p>
+    </div>
+    
+
+    <!-- <mdb-form-control class="mb-4">
+      <input formControlName="passwordConfirmation" mdbInput type="text" id="formControlLg" class="form-control form-control-lg" autocomplete="off" />
+      <label mdbLabel class="form-label" for="formControlLg">Confirm Password</label>
+    </mdb-form-control> -->
+
+
+    <app-plain-input label="Confirm Password" inputType="password" [control]="authForm.get('passwordConfirmation')"></app-plain-input>
+
+    <div class="my-3" *ngIf="authForm.get('password').touched && authForm.get('password').dirty && authForm.get('passwordConfirmation').touched && authForm.get('passwordConfirmation').dirty && authForm.errors && authForm.errors.passwordsDontMatch">
+      <p class="note note-danger">
+        <strong>Password Error:</strong> Password & Confirm Password does not match
+      </p>
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="text-center btn btn-lg btn-dark btn-rounded  ">Register</button>
+    </div>
+
+  </form>
+  
+</div>

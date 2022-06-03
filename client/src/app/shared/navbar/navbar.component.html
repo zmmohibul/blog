@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        (click)="centered.toggle()"
+        aria-controls="navbarCenteredExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- Collapsible wrapper -->
+      <div
+        class="collapse navbar-collapse justify-content-center"
+        id="navbarCenteredExample"
+        mdbCollapse
+        #centered="mdbCollapse"
+      >
+        <!-- Left links -->
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="mr-2 nav-item">
+            <a 
+                class="nav-link"
+                routerLink="/" 
+                routerLinkActive="active" 
+                [routerLinkActiveOptions]="{ exact: true }">
+                The Blog
+            </a>
+          </li>
+          <li class="mx-2 nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="ml-2 nav-item">
+            <a class="nav-link" tabindex="-1" routerLink="/register" routerLinkActive="active">Register</a>
+          </li>
+        </ul>
+        <!-- Left links -->
+      </div>
+      <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
