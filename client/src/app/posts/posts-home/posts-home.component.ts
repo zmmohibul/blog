@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from 'src/app/auth/auth.service';
+import { Post, PostService } from '../post.service';
 
 @Component({
   selector: 'app-posts-home',
@@ -7,14 +8,16 @@ import { AuthService, User } from 'src/app/auth/auth.service';
   styleUrls: ['./posts-home.component.scss']
 })
 export class PostsHomeComponent implements OnInit {
-  users: User[] = [];
+  posts: Post[] = [];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private postService: PostService) { }
 
   ngOnInit(): void {
-    this.authService.getAllUsers().subscribe((users: User[]) => {
-      this.users = users;
+    this.postService.getAllPosts().subscribe((posts: Post[]) => {
+      console.log(posts);
+      this.posts = posts;
     })
+    
   }
 
 }
