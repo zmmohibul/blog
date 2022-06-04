@@ -1,3 +1,4 @@
+### AUTH CONTROLLER TEST
 ### Get All Users
 GET https://localhost:5001/api/auth/allusers
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MjkxNTA2LCJleHAiOjE2NTQ4OTYzMDYsImlhdCI6MTY1NDI5MTUwNn0.hpbwf-aWWmkwvt5O909He5giaHVpC57F8_yVgJHKEtrVqxWDHF0pAvJ_VPIoWT1jMrvuUKvkLo-Auj0rIfad3Q
@@ -23,5 +24,30 @@ Content-Type: application/json
     "password": "Pa$$w0rd"
 }
 
-### Get Individual
+### Get Individual User
 GET https://localhost:5001/api/auth/asif
+
+
+
+
+
+### POSTS CONTROLLER TEST
+### Create Posts
+POST https://localhost:5001/api/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUxMTM0LCJleHAiOjE2NTQ5NTU5MzQsImlhdCI6MTY1NDM1MTEzNH0.Vomr7GbVyrfUaL64Dr8iZc3HkQ6b_TWRcrHBCpRkgmbJGjTM2geHIT5NnaZUZhUqZd3uYta-_eyuPex-K013UA
+
+{
+    "title": "Asif's third post",
+    "content": "Content of Asif's third post"
+}
+
+### Update
+PATCH  https://localhost:5001/api/posts/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUzOTAxLCJleHAiOjE2NTQ5NTg3MDEsImlhdCI6MTY1NDM1MzkwMX0.lbWiytpQxtoDHWgCql7fNxDS9qgc1Nuu-owVOFCX5V1Kr0IHbocsb-EE9X1UMquCdq0pCgjpSbSly50koxjhDA
+
+{
+    "title": "Asif's third post update",
+    "content": "Content of Asif's third post update"
+}

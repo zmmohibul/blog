@@ -24,41 +24,6 @@ namespace API.Data.Repositories
 
         }
 
-        public async Task<Result<List<UserDto>>> GetAllUsers()
-        {
-            var users = await _context.Users.ToListAsync();
-            return new Result<List<UserDto>>
-            {
-                IsSuccesful = true,
-                StatusCode = 200,
-                Data = _mapper.Map<List<UserDto>>(users)
-            };
-        }
-
-        public async Task<Result<UserDto>> GetUserByUsername(string username)
-        {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.Equals(username));
-            if (user == null)
-            {
-                return new Result<UserDto>
-                {
-                    StatusCode = 404,
-                    ErrorMessage = "User with that username does not exist",
-                    Data = null,
-                    IsSuccesful = false
-                };
-            }
-
-            
-
-            return new Result<UserDto>
-            {
-                StatusCode = 201,
-                IsSuccesful = true,
-                Data = _mapper.Map<UserDto>(user)
-            };
-        }
-
         public async Task<Result<UserDto>> RegisterUser(RegisterDto registerDto)
         {
             if (await _context.Users.AnyAsync(u => u.Username.Equals(registerDto.Username)))
@@ -144,6 +109,41 @@ namespace API.Data.Repositories
         public async Task<bool> UsernameExists(string username)
         {
             return await _context.Users.AnyAsync(u => u.Username.Equals(username));
+        }
+
+        public async Task<Result<List<UserDto>>> GetAllUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return new Result<List<UserDto>>
+            {
+                IsSuccesful = true,
+                StatusCode = 200,
+                Data = _mapper.Map<List<UserDto>>(users)
+            };
+        }
+
+        public async Task<Result<UserDto>> GetUserByUsername(string username)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.Equals(username));
+            if (user == null)
+            {
+                return new Result<UserDto>
+                {
+                    StatusCode = 404,
+                    ErrorMessage = "User with that username does not exist",
+                    Data = null,
+                    IsSuccesful = false
+                };
+            }
+
+            
+
+            return new Result<UserDto>
+            {
+                StatusCode = 201,
+                IsSuccesful = true,
+                Data = _mapper.Map<UserDto>(user)
+            };
         }
     }
 }

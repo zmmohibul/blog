@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,24 +16,10 @@ namespace API.Controllers
 {
     public class AuthController : BaseApiController
     {
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
-        private readonly ITokenService _tokenService;
         private readonly IAuthRepository _authRepository;
-        public AuthController(DataContext context, ITokenService tokenService, IMapper mapper, IAuthRepository authRepository)
+        public AuthController(IAuthRepository authRepository)
         {
             _authRepository = authRepository;
-            _tokenService = tokenService;
-            _mapper = mapper;
-            _context = context;
-        }
-
-        [Authorize]
-        [HttpGet("allusers")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var result = await _authRepository.GetAllUsers();
-            return Ok(result.Data);
         }
 
         [HttpPost("register")]
@@ -60,6 +47,14 @@ namespace API.Controllers
             return Ok(result.Data);
         }
 
+        [Authorize]
+        [HttpGet("allusers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var result = await _authRepository.GetAllUsers();
+            return Ok(result.Data);
+        }
+
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(string username)
         {
@@ -69,6 +64,8 @@ namespace API.Controllers
             {
                 return Ok(result.Data);
             }
+
+            // var u = User.FindFirst(ClaimTypes.Name);
 
             return NotFound(new Error{StatusCode = 404, Message = result.ErrorMessage});
         }

@@ -10,6 +10,12 @@ namespace API.Helpers
         {
             CreateMap<RegisterDto, User>();
             CreateMap<User, UserDto>();
+
+            CreateMap<CreatePostDto, Post>();
+            CreateMap<UpdatePostDto, Post>();
+            CreateMap<Post, PostToReturnDto>().ForMember(destination => destination.CreatedBy, options => options.MapFrom(source => source.CreatedBy.Username));
+
+            
         }  
     }
 }
