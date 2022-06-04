@@ -7,6 +7,7 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
+using System.Linq;
 
 namespace API.Data.Repositories
 {
@@ -21,18 +22,28 @@ namespace API.Data.Repositories
 
         }
 
-        public async Task<Result<List<PostToReturnDto>>> GetAllPostsAsync()
+        public async Task<Result<PagedResult<PostToReturnDto>>> GetAllPostsAsync(QueryParameters queryParameters)
         {
             var posts = await _context.Posts
+                .Include(p => p.CreatedBy)
+                .OrderBy(p => p.CreatedAt)
+                .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
+                .Take(queryParameters.PageSize)
                 .ProjectTo<PostToReturnDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .ToListAsync();
             
-            return new Result<List<PostToReturnDto>>
+            return new Result<PagedResult<PostToReturnDto>>
             {
                 IsSuccesful = true,
                 StatusCode = 200,
-                Data = posts
+                Data = new PagedResult<PostToReturnDto>
+                {
+                    Count = await _context.Posts.CountAsync(),
+                    PageSize = queryParameters.PageSize,
+                    PageNumber = queryParameters.PageNumber,
+                    Data = posts
+                }
             };
         }
 

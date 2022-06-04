@@ -8,7 +8,7 @@ namespace API.Interfaces
 {
     public interface IPostRepository
     {
-        Task<Result<List<PostToReturnDto>>> GetAllPostsAsync();
+        Task<Result<PagedResult<PostToReturnDto>>> GetAllPostsAsync(QueryParameters queryParameters);
         
         Task<Result<PostToReturnDto>> GetPostByIdAsync(int postId) ;
 

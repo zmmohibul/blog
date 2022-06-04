@@ -53,7 +53,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 }
 
 ### Get All Posts
-GET https://localhost:5001/api/posts
+GET https://localhost:5001/api/posts?pageSize=2&pageNumber=2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUxMTM0LCJleHAiOjE2NTQ5NTU5MzQsImlhdCI6MTY1NDM1MTEzNH0.Vomr7GbVyrfUaL64Dr8iZc3HkQ6b_TWRcrHBCpRkgmbJGjTM2geHIT5NnaZUZhUqZd3uYta-_eyuPex-K013UA
 

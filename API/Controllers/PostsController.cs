@@ -18,9 +18,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPosts()
+        public async Task<IActionResult> GetPosts([FromQuery] QueryParameters queryParameters)
         {
-            return Ok((await _postRepository.GetAllPostsAsync()).Data);
+            return Ok((await _postRepository.GetAllPostsAsync(queryParameters)).Data);
         }
 
         [HttpGet("{id}")]
