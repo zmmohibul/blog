@@ -17,6 +17,30 @@ namespace API.Controllers
             _postRepository = postRepository;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetPosts()
+        {
+            return Ok((await _postRepository.GetAllPostsAsync()).Data);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPost(int id)
+        {
+            var result = await _postRepository.GetPostByIdAsync(id);
+
+            if (!result.IsSuccesful)
+            {
+                var error = new Error{StatusCode = result.StatusCode, Message = result.ErrorMessage};
+                if (result.StatusCode == 404)
+                {
+                    return NotFound(error);
+                }
+            }
+
+            return Ok(result.Data);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreatePost(CreatePostDto createPostDto) 
         {
@@ -32,6 +56,30 @@ namespace API.Controllers
             
             if (!result.IsSuccesful) 
             {
+                return HandleUnsuccessfulResult(result);
+            }
+
+            return Ok(result.Data);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePost(int id) 
+        {
+            var result = await _postRepository.DeletePostAsync(id, User.FindFirst(ClaimTypes.Name).Value); 
+            
+            if (!result.IsSuccesful) 
+            {
+                return HandleUnsuccessfulResult(result);
+            }
+
+            return NoContent();
+        }
+
+
+        private IActionResult HandleUnsuccessfulResult(Result<PostToReturnDto> result)
+        {
+            if (!result.IsSuccesful) 
+            {
                 var error = new Error{StatusCode = result.StatusCode, Message = result.ErrorMessage};
                 if (result.StatusCode == 404)
                 {
@@ -44,7 +92,7 @@ namespace API.Controllers
                 }
             }
 
-            return Ok(result.Data);
+            return Ok();
         }
 
     }
