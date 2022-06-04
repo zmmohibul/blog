@@ -3,7 +3,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <app-input label="Username" plain-Type="text" [control]="loginForm.get('username')"></app-input>
 
-    <app-input label="Password" plain-Type="password" [control]="loginForm.get('password')"></app-input>
+    <app-input label="Password" inputType="password" [control]="loginForm.get('password')"></app-input>
 
     <div class="my-3" *ngIf="loginForm.errors && loginForm.errors.invalidCredential">
       <p class="note note-danger">

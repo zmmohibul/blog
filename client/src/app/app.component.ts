@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService, User } from './auth/auth.service';
 
 @Component({
@@ -9,18 +10,16 @@ import { AuthService, User } from './auth/auth.service';
 export class AppComponent implements OnInit{
   title = 'client';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     let user = localStorage.getItem('user');
     user = JSON.parse(user);
     if (user) {
       this.authService.currentUser$.next({ username: user["username"], createdAt: user["createdAt"], token: user["token"] });
+      this.authService.signedIn$.next(true);
 
-      this.authService.currentUser$.subscribe((user: User) => {
-        console.log(user);
-        console.log(`Username: ${user.username}, Token: ${user.token}`);
-      })
+      this.router.navigateByUrl('/posts');
     }
   }
 }

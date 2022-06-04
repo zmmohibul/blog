@@ -41,14 +41,8 @@
           </ng-container>
 
           <ng-container *ngIf="(currentUser$ | async)">
-            <li class="mr-2 nav-item">
-              <a 
-                class="nav-link"
-                routerLink="/posts" 
-                routerLinkActive="active" 
-              >
-                The Blog
-              </a>
+            <li class="mx-1 nav-item">
+              <a class="nav-link" routerLink="/posts" routerLinkActive="active">The Blog</a>
             </li>
             <li class="mx-1 nav-item">
               <a class="nav-link" routerLink="/login" routerLinkActive="active">Events</a>
