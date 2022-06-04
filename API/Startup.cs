@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Data.Repositories;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
@@ -41,6 +42,7 @@ namespace API
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddIdentityServices(_config);
             services.AddCors();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

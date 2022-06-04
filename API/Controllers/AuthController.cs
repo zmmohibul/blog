@@ -18,104 +18,72 @@ namespace API.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
-        public AuthController(DataContext context, ITokenService tokenService, IMapper mapper)
+        private readonly IAuthRepository _authRepository;
+        public AuthController(DataContext context, ITokenService tokenService, IMapper mapper, IAuthRepository authRepository)
         {
+            _authRepository = authRepository;
             _tokenService = tokenService;
             _mapper = mapper;
             _context = context;
-
         }
 
         [Authorize]
         [HttpGet("allusers")]
         public async Task<IActionResult> GetAllUsers()
         {
-            return Ok(await _context.Users.ToListAsync());
-        }
-
-        [HttpGet("{username}", Name = "GetUser")]
-        public async Task<IActionResult> GetUser(string username)
-        {
-            if (!await UserExists(username)) {
-                return BadRequest(new Error {statusCode = 400, Message = $"No user exists with username {username}"});
-            }
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.Equals(username));
-
-            return Ok(_mapper.Map<UserDto>(user));
+            var result = await _authRepository.GetAllUsers();
+            return Ok(result.Data);
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
-            var userExist = await _context.Users.AnyAsync(x => x.Username.Equals(registerDto.Username.ToLower()));
-            if (await UserExists(registerDto.Username)) 
+            var result = await _authRepository.RegisterUser(registerDto);
+            if (!result.IsSuccesful && result.StatusCode == 400) 
             {
-                return BadRequest(new Error {statusCode = 400, Message = "Username is taken"});
+                return BadRequest(new Error{StatusCode = 400, Message = result.ErrorMessage});
             }
 
-            
-
-            var user = _mapper.Map<User>(registerDto);
-
-            using var hmac = new HMACSHA512();
-
-            user.Username = registerDto.Username.ToLower();
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-            user.PasswordSalt = hmac.Key;
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-
-            return CreatedAtRoute(nameof(GetUser), new { Username = user.Username }, GetUserDto(user));
+            return CreatedAtRoute(nameof(GetUser), new { Username = result.Data.Username }, result.Data);
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users
-                .SingleOrDefaultAsync(x => x.Username.Equals(loginDto.Username));
+            var result = await _authRepository.UserLogin(loginDto);
 
-            if (user == null) return Unauthorized(new Error {statusCode = 401, Message = "Invalid Username"});
-
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
-            for (int i = 0; i < computedHash.Length; i++)
+            if (!result.IsSuccesful && result.StatusCode == 401)
             {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized(new Error {statusCode = 401, Message = "Invalid Password"});
+                return Unauthorized(new Error{StatusCode = 401, Message = result.ErrorMessage});
             }
 
-            return Ok(GetUserDto(user));
+            return Ok(result.Data);
+        }
+
+        [HttpGet("{username}", Name = "GetUser")]
+        public async Task<IActionResult> GetUser(string username)
+        {
+            var result = await _authRepository.GetUserByUsername(username);
+
+            if (result.IsSuccesful)
+            {
+                return Ok(result.Data);
+            }
+
+            return NotFound(new Error{StatusCode = 404, Message = result.ErrorMessage});
         }
 
         [HttpGet("userexist")]
-        public async Task<IActionResult> UserExistsAction([FromQuery] string username)
+        public async Task<IActionResult> UserExists([FromQuery] string username)
         {
-            if (await _context.Users.AnyAsync(x => x.Username.Equals(username.ToLower())) || username.Equals("users1"))
+            if (await _authRepository.UsernameExists(username))
             {
                 return Ok(new { Available = false });
             }
-            else 
+            else
             {
                 return Ok(new { Available = true });
             }
-        }
-
-
-        private async Task<bool> UserExists(string username)
-        {
-            return await _context.Users.AnyAsync(x => x.Username.Equals(username.ToLower()));
-        }
-
-        private UserDto GetUserDto(User user)
-        {
-            var userDto = _mapper.Map<UserDto>(user);
-            userDto.Token = _tokenService.CreateToken(user);
-
-            return userDto;
         }
     }
 }

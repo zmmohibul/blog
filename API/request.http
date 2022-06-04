@@ -9,7 +9,7 @@ POST https://localhost:5001/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "asif",
+    "username": "arif",
     "password": "Pa$$w0rd"
 }
 
@@ -22,3 +22,6 @@ Content-Type: application/json
     "username": "asif",
     "password": "Pa$$w0rd"
 }
+
+### Get Individual
+GET https://localhost:5001/api/auth/asif

@@ -2,7 +2,7 @@ namespace API.Helpers
 {
     public class Error
     {
-        public int statusCode { get; set; }
+        public int StatusCode { get; set; }
         
         public string Message { get; set; }
         
