@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Entities
@@ -15,5 +16,8 @@ namespace API.Entities
         public byte[] PasswordSalt { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        public ICollection<Post> Posts { get; set; } = new List<Post>();
+
     }
 }
