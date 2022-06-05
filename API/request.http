@@ -20,8 +20,8 @@ POST https://localhost:5001/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "arif",
-    "password": "Pa$$w0rd"
+    "username": "afzal",
+    "password": "P@ssw0rd"
 }
 
 ### Get Individual User
@@ -35,27 +35,27 @@ GET https://localhost:5001/api/auth/asif
 ### Create Post
 POST https://localhost:5001/api/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUxMTM0LCJleHAiOjE2NTQ5NTU5MzQsImlhdCI6MTY1NDM1MTEzNH0.Vomr7GbVyrfUaL64Dr8iZc3HkQ6b_TWRcrHBCpRkgmbJGjTM2geHIT5NnaZUZhUqZd3uYta-_eyuPex-K013UA
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwNjk1NCwiZXhwIjoxNjU1MDExNzU0LCJpYXQiOjE2NTQ0MDY5NTR9.LzK-MGuNTNuZWoAc88AboCgWCuncWX9nV1_Kxt_TC3lmM9JtSPrc3UOhYhHRwq6vLr1T3ScnBXR2hEW1IKbxug
 
 {
-    "title": "Asif's third post",
-    "content": "Content of Asif's third post"
+    "title": "Afzal's Post No - 5",
+    "content": "Afzal says: Here is tons of Content for Post No - 5 which was created by me"
 }
 
 ### Update Post
-PATCH  https://localhost:5001/api/posts/399
+PATCH  https://localhost:5001/api/posts/33
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUzOTAxLCJleHAiOjE2NTQ5NTg3MDEsImlhdCI6MTY1NDM1MzkwMX0.lbWiytpQxtoDHWgCql7fNxDS9qgc1Nuu-owVOFCX5V1Kr0IHbocsb-EE9X1UMquCdq0pCgjpSbSly50koxjhDA
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwNjk1NCwiZXhwIjoxNjU1MDExNzU0LCJpYXQiOjE2NTQ0MDY5NTR9.LzK-MGuNTNuZWoAc88AboCgWCuncWX9nV1_Kxt_TC3lmM9JtSPrc3UOhYhHRwq6vLr1T3ScnBXR2hEW1IKbxug
 
 {
-    "title": "Asif's third post update",
-    "content": "Content of Asif's third post update"
+    "title": "Afzal's Post No - 5 update",
+    "content": "Afzal says: Here is tons of Content for Post No - 5 which was created by me update"
 }
 
 ### Get All Posts
 GET https://localhost:5001/api/posts?pageSize=3&pageNumber=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUxMTM0LCJleHAiOjE2NTQ5NTU5MzQsImlhdCI6MTY1NDM1MTEzNH0.Vomr7GbVyrfUaL64Dr8iZc3HkQ6b_TWRcrHBCpRkgmbJGjTM2geHIT5NnaZUZhUqZd3uYta-_eyuPex-K013UA
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwMTIzMiwiZXhwIjoxNjU1MDA2MDMyLCJpYXQiOjE2NTQ0MDEyMzJ9.VzPOZr0nCGeq1636VsTMxlfI3XD1IXS4pMAy7RnuCMzDQP6-g9iFSyE7TmI4tzd_TxO4AX-OBhIDr3J_fmI0QA
 
 
 ### Get Post By Id

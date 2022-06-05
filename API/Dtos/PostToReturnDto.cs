@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using API.Entities;
 
 namespace API.Dtos
 {
@@ -10,8 +13,10 @@ namespace API.Dtos
         
         public string Content { get; set; }
         
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
         public string CreatedBy { get; set; }
+
+        public ICollection<PostCommentDto> Comments { get; set; }
     }
 }

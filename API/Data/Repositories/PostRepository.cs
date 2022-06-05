@@ -23,16 +23,22 @@ namespace API.Data.Repositories
         }
 
         public async Task<Result<PagedResult<PostToReturnDto>>> GetAllPostsAsync(QueryParameters queryParameters)
-        {
+        {   
             var posts = await _context.Posts
                 .Include(p => p.CreatedBy)
-                .OrderBy(p => p.CreatedAt)
+                .OrderByDescending(p => p.CreatedAt)
                 .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
                 .Take(queryParameters.PageSize)
-                .ProjectTo<PostToReturnDto>(_mapper.ConfigurationProvider)
+                .Include(p => p.Comments.OrderByDescending(c => c.CreatedAt).Take(5))
                 .AsNoTracking()
                 .ToListAsync();
-            
+
+            var postToReturnDtoList = new List<PostToReturnDto>();
+            foreach (var post in posts) 
+            {
+                postToReturnDtoList.Add(GetPostToReturnDto(post));
+            }
+
             return new Result<PagedResult<PostToReturnDto>>
             {
                 IsSuccesful = true,
@@ -42,7 +48,7 @@ namespace API.Data.Repositories
                     Count = await _context.Posts.CountAsync(),
                     PageSize = queryParameters.PageSize,
                     PageNumber = queryParameters.PageNumber,
-                    Data = posts
+                    Data = postToReturnDtoList
                 }
             };
         }
@@ -50,7 +56,7 @@ namespace API.Data.Repositories
         public async Task<Result<PostToReturnDto>> GetPostByIdAsync(int postId) 
         {
             var post = await _context.Posts
-                .ProjectTo<PostToReturnDto>(_mapper.ConfigurationProvider)
+                .Include(p => p.Comments.OrderByDescending(c => c.CreatedAt).Take(10))
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.Id == postId);
             
@@ -63,7 +69,7 @@ namespace API.Data.Repositories
             {
                 IsSuccesful = true,
                 StatusCode = 200,
-                Data = post
+                Data = GetPostToReturnDto(post)
             };
         }
 
@@ -168,8 +174,37 @@ namespace API.Data.Repositories
             {
                 IsSuccesful = true,
                 StatusCode = 201,
-                Data = _mapper.Map<PostToReturnDto>(post)
+                Data = GetPostToReturnDto(post)
             };
+        }
+
+        private PostToReturnDto GetPostToReturnDto(Post post)
+        {
+            var commentsDto = new List<PostCommentDto>();
+            foreach (var comment in post.Comments) 
+            {
+                var commentDto = new PostCommentDto
+                {
+                    Id = comment.Id,
+                    Content = comment.Content,
+                    PostId = comment.PostId,
+                    UserId = comment.UserId,
+                    CreatedAt = comment.CreatedAt
+                };
+                commentsDto.Add(commentDto);
+            }
+
+            var postToReturnDto = new PostToReturnDto
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                CreatedAt = post.CreatedAt,
+                CreatedBy = post.CreatedBy.Username,
+                Comments = commentsDto
+            };
+
+            return postToReturnDto;
         }
 
     }

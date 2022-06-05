@@ -13,7 +13,9 @@ namespace API.Helpers
 
             CreateMap<CreatePostDto, Post>();
             CreateMap<UpdatePostDto, Post>();
-            CreateMap<Post, PostToReturnDto>().ForMember(destination => destination.CreatedBy, options => options.MapFrom(source => source.CreatedBy.Username));
+            // CreateMap<Post, PostToReturnDto>()
+            //     .ForMember(destination => destination.CreatedBy, options => options.MapFrom(source => source.CreatedBy.Username))
+            //     .ForMember(destination => destination.Comments, options => options.MapFrom(source => source.Comments));
 
             
         }  
