@@ -45,6 +45,8 @@ namespace API.Data.Repositories
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
             user.PasswordSalt = hmac.Key;
 
+            user.CreatedAt = System.DateTime.Now;
+            
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

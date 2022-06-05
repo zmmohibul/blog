@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace API.Entities
 {
@@ -10,10 +11,12 @@ namespace API.Entities
         
         public string Content { get; set; }
         
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
         
         public int UserId { get; set; }
         
         public User CreatedBy { get; set; }
+
+        public ICollection<PostComment> Comments { get; set; } = new List<PostComment>();
     }
 }

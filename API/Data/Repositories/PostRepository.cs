@@ -77,6 +77,7 @@ namespace API.Data.Repositories
 
             var post = _mapper.Map<Post>(createPostDto);
             post.CreatedBy = user;
+            post.CreatedAt = System.DateTime.Now;
 
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();

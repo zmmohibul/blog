@@ -15,7 +15,7 @@ namespace API.Entities
         
         public byte[] PasswordSalt { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
         public ICollection<Post> Posts { get; set; } = new List<Post>();
 
