@@ -24,6 +24,7 @@ import { RouterModule } from '@angular/router';
 import { InputComponent } from './input/input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PlainInputComponent } from './plain-input/plain-input.component';
+// import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 
@@ -53,7 +54,8 @@ import { PlainInputComponent } from './plain-input/plain-input.component';
     MdbTooltipModule,
     MdbValidationModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // InfiniteScrollModule
   ],
   exports: [
     MdbAccordionModule,
@@ -75,7 +77,8 @@ import { PlainInputComponent } from './plain-input/plain-input.component';
     BrowserModule,
     NavbarComponent,
     InputComponent,
-    PlainInputComponent
+    PlainInputComponent,
+    // InfiniteScrollModule
   ]
 })
 export class SharedModule { }

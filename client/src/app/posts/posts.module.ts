@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { PostsRoutingModule } from './posts-routing.module';
 import { PostsHomeComponent } from './posts-home/posts-home.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { PostsHomeComponent } from './posts-home/posts-home.component';
   ],
   imports: [
     CommonModule,
-    PostsRoutingModule
+    PostsRoutingModule,
+    InfiniteScrollModule
   ]
 })
 export class PostsModule { }

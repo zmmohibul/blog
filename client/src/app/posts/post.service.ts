@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, of, tap } from 'rxjs';
+import { QueryParameters } from '../helpers/queryParameters';
+import { PagedResult } from '../interfaces/pagedResult';
 
 export interface Post {
   id: number;
@@ -19,16 +21,22 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  getAllPosts() {
-    if (this.allPosts.length === 0) {
-      return this.http.get<Post[]>(`${this.rootUrl}`)
+  getAllPosts(queryParameters: QueryParameters) {
+    return this.http.get<PagedResult<Post>>(`${this.rootUrl}?pageNumber=${queryParameters.pageNumber}&pageSize=${queryParameters.pageSize}`)
         .pipe(
-          tap((posts: Post[]) => {
-            this.allPosts = posts;
-          }
-        ));
-    }
+          tap((pagedResult: PagedResult<Post>) => {
+            this.allPosts = pagedResult.data;
+          })
+        );
+    // if (this.allPosts.length === 0) {
+    //   return this.http.get<PagedResult<Post>>(`${this.rootUrl}`)
+    //     .pipe(
+    //       tap((pagedResult: PagedResult<Post>) => {
+    //         this.allPosts = pagedResult.data;
+    //       })
+    //     );
+    // }
     
-    return of(this.allPosts);
+    // return of(this.allPosts);
   }
 }
