@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { PostsRoutingModule } from './posts-routing.module';
 import { PostsHomeComponent } from './posts-home/posts-home.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { PostComponent } from './post/post.component';
+import { SharedModule } from '../shared/shared.module';
+import { CommonModule } from '@angular/common';
 
 
 
 @NgModule({
   declarations: [
-    PostsHomeComponent
+    PostsHomeComponent,
+    PostComponent,
   ],
   imports: [
-    CommonModule,
     PostsRoutingModule,
-    InfiniteScrollModule
+    SharedModule,
+    CommonModule
   ]
 })
 export class PostsModule { }

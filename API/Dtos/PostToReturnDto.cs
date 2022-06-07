@@ -17,6 +17,8 @@ namespace API.Dtos
 
         public string CreatedBy { get; set; }
 
+        public int NumberOfComments { get; set; }
+        
         public ICollection<PostCommentDto> Comments { get; set; }
     }
 }

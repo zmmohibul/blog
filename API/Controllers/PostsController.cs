@@ -75,25 +75,5 @@ namespace API.Controllers
             return NoContent();
         }
 
-
-        private IActionResult HandleUnsuccessfulResult(Result<PostToReturnDto> result)
-        {
-            if (!result.IsSuccesful) 
-            {
-                var error = new Error{StatusCode = result.StatusCode, Message = result.ErrorMessage};
-                if (result.StatusCode == 404)
-                {
-                    return NotFound(error);
-                }
-
-                if (result.StatusCode == 401)
-                {
-                    return Unauthorized(error);
-                }
-            }
-
-            return Ok();
-        }
-
     }
 }

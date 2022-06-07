@@ -10,8 +10,8 @@ POST https://localhost:5001/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "arif",
-    "password": "Pa$$w0rd"
+    "username": "aman",
+    "password": "P@ssw0rd"
 }
 
 
@@ -20,7 +20,7 @@ POST https://localhost:5001/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "afzal",
+    "username": "aman",
     "password": "P@ssw0rd"
 }
 
@@ -43,7 +43,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 }
 
 ### Update Post
-PATCH  https://localhost:5001/api/posts/33
+PATCH  https://localhost:5001/api/posts/30
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwNjk1NCwiZXhwIjoxNjU1MDExNzU0LCJpYXQiOjE2NTQ0MDY5NTR9.LzK-MGuNTNuZWoAc88AboCgWCuncWX9nV1_Kxt_TC3lmM9JtSPrc3UOhYhHRwq6vLr1T3ScnBXR2hEW1IKbxug
 
@@ -59,9 +59,9 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 
 
 ### Get Post By Id
-GET https://localhost:5001/api/posts/3
+GET https://localhost:5001/api/posts/33
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUxMTM0LCJleHAiOjE2NTQ5NTU5MzQsImlhdCI6MTY1NDM1MTEzNH0.Vomr7GbVyrfUaL64Dr8iZc3HkQ6b_TWRcrHBCpRkgmbJGjTM2geHIT5NnaZUZhUqZd3uYta-_eyuPex-K013UA
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwNzYyNCwiZXhwIjoxNjU1MDEyNDI0LCJpYXQiOjE2NTQ0MDc2MjR9.1cJStSsi1EmN-UiqnQFZQolttgAEVs_C7Id4BeTUVGnV9O_6ilbWZfrGGl2Bom5yYAKRD2Zm7TDqNe1QDTItcA
 
 
 
@@ -69,3 +69,17 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 DELETE  https://localhost:5001/api/posts/3
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiI1IiwidW5pcXVlX25hbWUiOiJhc2lmIiwibmJmIjoxNjU0MzUxMTM0LCJleHAiOjE2NTQ5NTU5MzQsImlhdCI6MTY1NDM1MTEzNH0.Vomr7GbVyrfUaL64Dr8iZc3HkQ6b_TWRcrHBCpRkgmbJGjTM2geHIT5NnaZUZhUqZd3uYta-_eyuPex-K013UA
+
+
+
+
+
+### POST COMMENT CONTROLLER
+### Create New Comment
+POST https://localhost:5001/api/postcomments/post/33
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxMCIsInVuaXF1ZV9uYW1lIjoiYW1hbiIsIm5iZiI6MTY1NDQ4OTI0MCwiZXhwIjoxNjU1MDk0MDQwLCJpYXQiOjE2NTQ0ODkyNDB9.far7Fku4f_Ym7oa6vO_ul1A7Phm9muLUfoX3_DKnbMc5PefqWCg6VLa4YnfkOVLVjU3Ry3IsxUiEFD5ZIiNkCw
+
+{
+    "content": "This my friend, is splendid..."
+}

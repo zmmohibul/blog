@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, User } from 'src/app/auth/auth.service';
 import { PostQueryParameters } from 'src/app/helpers/postQueryParameter';
-import { QueryParameters } from 'src/app/helpers/queryParameters';
 import { PagedResult } from 'src/app/interfaces/pagedResult';
 import { Post, PostService } from '../post.service';
 
@@ -14,6 +13,7 @@ export class PostsHomeComponent implements OnInit {
   posts: Post[] = [];
   result: PagedResult<Post>;
   postQueryParameters = new PostQueryParameters();
+  hideComments = true;
 
   constructor(private authService: AuthService, private postService: PostService) { }
 
@@ -29,6 +29,13 @@ export class PostsHomeComponent implements OnInit {
         this.posts.push(...posts);
       }
     });
+  }
+
+  onCommentsButtonClick() {
+    this.hideComments = !this.hideComments;
+    console.log(this.hideComments);
+    
+    
   }
 
   onScrollUp() {

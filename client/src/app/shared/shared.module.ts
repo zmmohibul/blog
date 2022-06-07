@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 
 
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -24,6 +22,7 @@ import { RouterModule } from '@angular/router';
 import { InputComponent } from './input/input.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PlainInputComponent } from './plain-input/plain-input.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 // import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
@@ -36,8 +35,7 @@ import { PlainInputComponent } from './plain-input/plain-input.component';
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
-    BrowserModule,
+
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
@@ -73,12 +71,10 @@ import { PlainInputComponent } from './plain-input/plain-input.component';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    BrowserAnimationsModule,
-    BrowserModule,
     NavbarComponent,
     InputComponent,
     PlainInputComponent,
-    // InfiniteScrollModule
+    InfiniteScrollModule
   ]
 })
 export class SharedModule { }

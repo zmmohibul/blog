@@ -29,14 +29,14 @@ namespace API.Data.Repositories
                 .OrderByDescending(p => p.CreatedAt)
                 .Skip((queryParameters.PageNumber - 1) * queryParameters.PageSize)
                 .Take(queryParameters.PageSize)
-                .Include(p => p.Comments.OrderByDescending(c => c.CreatedAt).Take(5))
+                .Include(p => p.Comments.OrderByDescending(c => c.CreatedAt).Take(3))
                 .AsNoTracking()
                 .ToListAsync();
 
             var postToReturnDtoList = new List<PostToReturnDto>();
             foreach (var post in posts) 
             {
-                postToReturnDtoList.Add(GetPostToReturnDto(post));
+                postToReturnDtoList.Add(await GetPostToReturnDtoAsync(post));
             }
 
             return new Result<PagedResult<PostToReturnDto>>
@@ -56,20 +56,21 @@ namespace API.Data.Repositories
         public async Task<Result<PostToReturnDto>> GetPostByIdAsync(int postId) 
         {
             var post = await _context.Posts
+                .Include(p => p.CreatedBy)
                 .Include(p => p.Comments.OrderByDescending(c => c.CreatedAt).Take(10))
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.Id == postId);
             
             if (post == null) 
             {
-                return PostNotFoundResult();
+                return ReturnResults<PostToReturnDto>.PostNotFoundResult();
             }
 
             return new Result<PostToReturnDto>
             {
                 IsSuccesful = true,
                 StatusCode = 200,
-                Data = GetPostToReturnDto(post)
+                Data = await GetPostToReturnDtoAsync(post)
             };
         }
 
@@ -78,7 +79,7 @@ namespace API.Data.Repositories
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.Equals(username));
             if (user == null)
             {
-                return UnauthorizedUserResult();
+                return ReturnResults<PostToReturnDto>.UnauthorizedUserResult();
             }
 
             var post = _mapper.Map<Post>(createPostDto);
@@ -88,7 +89,7 @@ namespace API.Data.Repositories
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
 
-            return CreatedOrUpdatedPostResult(post);
+            return await CreatedOrUpdatedPostResultAsync(post);
         }
 
         public async Task<Result<PostToReturnDto>> UpdatePostAsync(int postId, string username, UpdatePostDto updatePostDto)
@@ -101,7 +102,7 @@ namespace API.Data.Repositories
 
             if (post == null)
             {
-                return PostNotFoundResult();
+                return ReturnResults<PostToReturnDto>.PostNotFoundResult();
             }
             System.Console.WriteLine(post.Id);
             System.Console.WriteLine(user.Username);
@@ -109,7 +110,7 @@ namespace API.Data.Repositories
 
             if (!post.CreatedBy.Username.Equals(username))
             {
-                return UnauthorizedUserResult();
+                return ReturnResults<PostToReturnDto>.UnauthorizedUserResult();
             }
 
             post.Content = updatePostDto.Content;
@@ -118,7 +119,7 @@ namespace API.Data.Repositories
             _context.Update(post);
             await _context.SaveChangesAsync();
 
-            return CreatedOrUpdatedPostResult(post);
+            return await CreatedOrUpdatedPostResultAsync(post);
         }
 
         public async Task<Result<PostToReturnDto>> DeletePostAsync(int postId, string username)
@@ -129,12 +130,12 @@ namespace API.Data.Repositories
             
             if (post == null) 
             {
-                return PostNotFoundResult();
+                return ReturnResults<PostToReturnDto>.PostNotFoundResult();
             }
 
             if (!post.CreatedBy.Username.Equals(username))
             {
-                return UnauthorizedUserResult();
+                return ReturnResults<PostToReturnDto>.UnauthorizedUserResult();
             }
 
             _context.Remove(post);
@@ -147,40 +148,21 @@ namespace API.Data.Repositories
             };
         }
 
-
-        private Result<PostToReturnDto> PostNotFoundResult()
-        {
-            return new Result<PostToReturnDto>
-            {
-                IsSuccesful = false,
-                StatusCode = 404,
-                ErrorMessage = "Post not found"
-            };
-        }
-
-        private Result<PostToReturnDto> UnauthorizedUserResult()
-        {
-            return new Result<PostToReturnDto>
-            {
-                IsSuccesful = false,
-                StatusCode = 401,
-                ErrorMessage = "Unauthorized user"
-            };
-        }
-
-        private Result<PostToReturnDto> CreatedOrUpdatedPostResult(Post post)
+        private async Task<Result<PostToReturnDto>> CreatedOrUpdatedPostResultAsync(Post post)
         {
             return new Result<PostToReturnDto>
             {
                 IsSuccesful = true,
                 StatusCode = 201,
-                Data = GetPostToReturnDto(post)
+                Data = await GetPostToReturnDtoAsync(post)
             };
         }
 
-        private PostToReturnDto GetPostToReturnDto(Post post)
+        private async Task<PostToReturnDto> GetPostToReturnDtoAsync(Post post)
         {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == post.CreatedBy.Id);
             var commentsDto = new List<PostCommentDto>();
+            var commentCount = await _context.PostComments.CountAsync(c => c.PostId == post.Id);
             foreach (var comment in post.Comments) 
             {
                 var commentDto = new PostCommentDto
@@ -188,7 +170,7 @@ namespace API.Data.Repositories
                     Id = comment.Id,
                     Content = comment.Content,
                     PostId = comment.PostId,
-                    UserId = comment.UserId,
+                    Username = user.Username,
                     CreatedAt = comment.CreatedAt
                 };
                 commentsDto.Add(commentDto);
@@ -201,7 +183,8 @@ namespace API.Data.Repositories
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
                 CreatedBy = post.CreatedBy.Username,
-                Comments = commentsDto
+                Comments = commentsDto,
+                NumberOfComments = commentCount
             };
 
             return postToReturnDto;
