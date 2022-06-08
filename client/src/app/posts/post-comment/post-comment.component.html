@@ -1,1 +1,9 @@
 <div [ngClass]="{'hide': hideComments}" *ngFor="let comment of (comments$ | async)" class="card-footer text-muted"><strong> {{ comment.username }} </strong> - {{ comment.content }} </div>
+
+<form (keyup.enter)="onCommentFormSubmit()" [formGroup]="commentForm" (ngsubmit)="onCommentFormSubmit()">
+    <app-plain-input label="Comment..." [control]="commentForm.get('content')"></app-plain-input>
+</form>
+
+
+
+<!-- (keyup.enter)="onCommentFormSubmit(post.id)" -->

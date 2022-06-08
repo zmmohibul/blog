@@ -10,7 +10,6 @@
 
         <div class="right">{{ post.numberOfComments }} Comments</div>
     </div>
-    <app-post-comment [hideComments]="hideComments" [commentsFetchedWithPost]="post.comments"></app-post-comment>
-    <ng-content></ng-content>
+    <app-post-comment [postId]="post.id" [hideComments]="hideComments" [commentsFetchedWithPost]="post.comments"></app-post-comment>
 </div>
   

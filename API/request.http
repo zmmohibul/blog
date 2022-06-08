@@ -59,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 
 
 ### Get Post By Id
-GET https://localhost:5001/api/posts/8
+GET https://localhost:5001/api/posts/33
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwNzYyNCwiZXhwIjoxNjU1MDEyNDI0LCJpYXQiOjE2NTQ0MDc2MjR9.1cJStSsi1EmN-UiqnQFZQolttgAEVs_C7Id4BeTUVGnV9O_6ilbWZfrGGl2Bom5yYAKRD2Zm7TDqNe1QDTItcA
 

@@ -9,7 +9,6 @@ import { Post } from 'src/app/interfaces/post';
 })
 export class PostComponent implements OnInit {
   @Input() post: Post;
-  @Output() commentsClick = new EventEmitter<boolean>();
   hideComments = true;
   constructor(public presenceService: PresenceService) { }
 
@@ -17,7 +16,6 @@ export class PostComponent implements OnInit {
   }
 
   onCommentsButtonClick() {
-    this.commentsClick.emit(!this.hideComments);
     this.hideComments = !this.hideComments;
   }
 }

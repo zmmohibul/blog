@@ -1,7 +1,3 @@
 <div  infinite-scroll (scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()">
-  <app-post *ngFor="let post of (postService.posts$ | async)" [post]="post" (commentsClick)="onCommentsButtonClick()">
-    <form (keyup.enter)="onCommentFormSubmit(post.id)" [formGroup]="commentForm" (ngsubmit)="onCommentFormSubmit(post.id)">
-      <app-plain-input label="Comment..." [control]="commentForm.get('content')"></app-plain-input>
-    </form>
-  </app-post>
+  <app-post *ngFor="let post of (postService.posts$ | async)" [post]="post" (commentsClick)="onCommentsButtonClick()"></app-post>
 </div>
