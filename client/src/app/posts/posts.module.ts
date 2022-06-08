@@ -6,6 +6,7 @@ import { PostComponent } from './post/post.component';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PostCommentComponent } from './post-comment/post-comment.component';
 
 
 
@@ -13,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     PostsHomeComponent,
     PostComponent,
+    PostCommentComponent,
   ],
   imports: [
     PostsRoutingModule,

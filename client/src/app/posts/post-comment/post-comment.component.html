@@ -1,0 +1,1 @@
+<div [ngClass]="{'hide': hideComments}" *ngFor="let comment of (comments$ | async)" class="card-footer text-muted"><strong> {{ comment.username }} </strong> - {{ comment.content }} </div>

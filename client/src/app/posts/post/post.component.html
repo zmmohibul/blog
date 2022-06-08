@@ -10,7 +10,7 @@
 
         <div class="right">{{ post.numberOfComments }} Comments</div>
     </div>
-    <div [ngClass]="{'hide': hideComments}" *ngFor="let comment of post.comments" class="card-footer text-muted"><strong> {{ comment.username }} </strong> - {{ comment.content }} </div>
+    <app-post-comment [hideComments]="hideComments" [commentsFetchedWithPost]="post.comments"></app-post-comment>
     <ng-content></ng-content>
 </div>
   
