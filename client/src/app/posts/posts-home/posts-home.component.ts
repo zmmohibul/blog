@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService, User } from 'src/app/auth/auth.service';
-import { PostQueryParameters } from 'src/app/helpers/postQueryParameter';
-import { PagedResult } from 'src/app/interfaces/pagedResult';
-import { Post } from 'src/app/interfaces/post';
 import { PostService } from '../post.service';
 
 @Component({
@@ -12,29 +9,20 @@ import { PostService } from '../post.service';
   styleUrls: ['./posts-home.component.scss']
 })
 export class PostsHomeComponent implements OnInit {
-  posts: Post[] = [];
-  result: PagedResult<Post>;
-  postQueryParameters = new PostQueryParameters();
   hideComments = true;
 
   commentForm = new FormGroup({
     content: new FormControl('', [Validators.required])
   })
 
-  constructor(private authService: AuthService, private postService: PostService) { }
+  constructor(private authService: AuthService, public postService: PostService) { }
 
   ngOnInit(): void {
-    this.postService.fetchNextPosts().subscribe((posts: Post[]) => {
-      this.posts.push(...posts);
-    });
+    this.postService.fetchNextPosts().subscribe(() => {});
   }
 
   onScrollDown() {    
-    this.postService.fetchNextPosts().subscribe((posts: Post[]) => {
-      if (this.posts.length < this.postService.totalNumberOfPosts) {
-        this.posts.push(...posts);
-      }
-    });
+    this.postService.fetchNextPosts().subscribe(() => {});
   }
 
   onCommentsButtonClick() {
