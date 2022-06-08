@@ -1,5 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { QueryParameters } from '../helpers/queryParameters';
+
+interface CreateCommentDto {
+  content: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +14,12 @@ export class PostCommentService {
 
   constructor(private http: HttpClient) { }
 
-  createPost(content: string, postId: number) {
-    this.http.post(`${this.rootUrl}/posts/${postId}`, { content })
+  createComment(comment: CreateCommentDto, postId: number) {
+    return this.http.post(`${this.rootUrl}/post/${postId}`, comment);
+  }
+
+  getComments(qm: QueryParameters, postId: number) {
+    
+    return this.http.get(`${this.rootUrl}/post/${postId}?pageNumber=${qm.pageNumber}&pageSize=${qm.pageSize}`);
   }
 }

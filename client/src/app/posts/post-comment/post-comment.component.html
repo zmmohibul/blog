@@ -1,4 +1,5 @@
-<div [ngClass]="{'hide': hideComments}" *ngFor="let comment of (comments$ | async)" class="card-footer text-muted"><strong> {{ comment.username }} </strong> - {{ comment.content }} </div>
+<div [ngClass]="{'hide': hideComments}" *ngFor="let comment of (comments$ | async)" class="card-footer text-muted"><strong> {{ comment.username }} </strong> - {{ comment.content }} ----- {{ comment.createdAt | timeago }} </div>
+<a (click)="loadComments()" [ngClass]="{'hide': hideComments, 'click': cursor}" class="click mx-4 card-link"> {{ loadMoreText }} </a>
 
 <form (keyup.enter)="onCommentFormSubmit()" [formGroup]="commentForm" (ngsubmit)="onCommentFormSubmit()">
     <app-plain-input label="Comment..." [control]="commentForm.get('content')"></app-plain-input>

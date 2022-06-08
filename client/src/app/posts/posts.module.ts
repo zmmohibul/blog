@@ -6,7 +6,10 @@ import { PostComponent } from './post/post.component';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import { PostCommentComponent } from './post-comment/post-comment.component';
+import { TimeagoModule } from 'ngx-timeago';
+
 
 
 
@@ -20,7 +23,8 @@ import { PostCommentComponent } from './post-comment/post-comment.component';
     PostsRoutingModule,
     SharedModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TimeagoModule.forRoot()
   ]
 })
 export class PostsModule { }

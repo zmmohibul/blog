@@ -1,7 +1,7 @@
 <div class="card my-5" style="width: 100%;">
     <div class="card-body">
         <h5 class="card-title">{{ post.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted"> <i [class.is-online]="(presenceService.onlineUsers$ | async).includes(post.createdBy)" class="fa fa-user mx-1"></i> {{ post.createdBy }}   -   {{ post.createdAt | date }} </h6>
+        <h6 class="card-subtitle mb-2 text-muted"> <i [class.is-online]="(presenceService.onlineUsers$ | async).includes(post.createdBy)" class="fa fa-user mx-1"></i> {{ post.createdBy }}   -   {{ post.createdAt | timeago }} </h6>
         <p class="card-text">
             {{ post.content }}
         </p>

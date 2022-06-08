@@ -83,3 +83,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 {
     "content": "beautiful"
 }
+
+### Get Comments
+GET https://localhost:5001/api/postcomments/post/33?pageSize=6&pageNumber=4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwidW5pcXVlX25hbWUiOiJzYWRlayIsIm5iZiI6MTY1NDU2OTkzMiwiZXhwIjoxNjU1MTc0NzMyLCJpYXQiOjE2NTQ1Njk5MzJ9.wLGJXAcpE9qdiu7L90C_g4Cjk1Q_dSkP4ZkW4kNrOpUOhqHLZyQreAlzBI6FWxawIhMbObsJJAV1w4vbR3wsOw

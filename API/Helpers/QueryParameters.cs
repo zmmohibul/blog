@@ -4,7 +4,7 @@ namespace API.Helpers
     {
         public int MaxPageSize { get; } = 20;
 
-        private int _pageSize = 20;
+        private int _pageSize = 6;
         public int PageSize 
         {
             get
