@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
+import { PresenceService } from './presence.service';
+import { Router } from '@angular/router';
 
 
 export interface User {
@@ -31,7 +33,7 @@ export class AuthService {
   currentUser$ = new BehaviorSubject<User>(null);
   signedIn$ = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private preseneceService: PresenceService, private router: Router) { }
 
   usernameExists(username: string) {
     const options = {
@@ -50,6 +52,7 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(user));
         this.currentUser$.next(user);
         this.signedIn$.next(true);
+        this.preseneceService.createHubConnection(user);
       }));
   }
 
@@ -59,7 +62,21 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(user));
         this.currentUser$.next(user);
         this.signedIn$.next(true);
+        this.preseneceService.createHubConnection(user);
       }));
+  }
+
+  logout() {
+    this.currentUser$.next(null);
+    this.signedIn$.next(false);
+    localStorage.clear();
+    this.preseneceService.stopConnection();
+    this.router.navigateByUrl("/");
+  }
+
+  setCurrentUser(user: User) {
+    this.currentUser$.next({ username: user.username, createdAt: user.createdAt, token: user.token });
+    this.signedIn$.next(true);
   }
 
   getAllUsers() {

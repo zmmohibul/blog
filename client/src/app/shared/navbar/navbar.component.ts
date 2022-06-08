@@ -9,22 +9,14 @@ import { AuthService, User } from 'src/app/auth/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  currentUser$: BehaviorSubject<User> = new BehaviorSubject(null);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe((user: User) => {
-      this.currentUser$.next(user);
-    });
   }
 
   onLogout() {
-    this.currentUser$.next(null);
-    this.authService.currentUser$.next(null);
-    this.authService.signedIn$.next(false);
-    localStorage.clear();
-    this.router.navigateByUrl("/");
+    this.authService.logout()
   }
 
 }

@@ -9,6 +9,7 @@ using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using API.Services;
+using API.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +34,7 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSingleton<PresenceTracker>();
             services.AddControllers();
             services.AddDbContext<DataContext>(options =>
             {
@@ -46,6 +47,7 @@ namespace API
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostCommentRepository, PostCommentRepository>();
+            services.AddSignalR();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -66,7 +68,7 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:4200"));
 
             app.UseAuthentication();
 
@@ -75,6 +77,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PresenceHub>("hubs/presence");
             });
         }
     }

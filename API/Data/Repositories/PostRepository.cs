@@ -165,12 +165,13 @@ namespace API.Data.Repositories
             var commentCount = await _context.PostComments.CountAsync(c => c.PostId == post.Id);
             foreach (var comment in post.Comments) 
             {
+                var cu = await _context.Users.SingleOrDefaultAsync(u => u.Id == comment.UserId);
                 var commentDto = new PostCommentDto
                 {
                     Id = comment.Id,
                     Content = comment.Content,
                     PostId = comment.PostId,
-                    Username = user.Username,
+                    Username = cu.Username,
                     CreatedAt = comment.CreatedAt
                 };
                 commentsDto.Add(commentDto);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, User } from './auth/auth.service';
+import { PresenceService } from './auth/presence.service';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +11,13 @@ import { AuthService, User } from './auth/auth.service';
 export class AppComponent implements OnInit{
   title = 'client';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private presenceService: PresenceService) {}
 
   ngOnInit() {
-    let user = localStorage.getItem('user');
-    user = JSON.parse(user);
+    let user: User = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      this.authService.currentUser$.next({ username: user["username"], createdAt: user["createdAt"], token: user["token"] });
-      this.authService.signedIn$.next(true);
+      this.authService.setCurrentUser(user);
+      this.presenceService.createHubConnection(user);
 
       this.router.navigateByUrl('/posts');
     }

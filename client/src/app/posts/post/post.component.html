@@ -1,7 +1,7 @@
 <div class="card my-5" style="width: 100%;">
     <div class="card-body">
         <h5 class="card-title">{{ post.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ post.createdBy }}   -   {{ post.createdAt | date }} </h6>
+        <h6 class="card-subtitle mb-2 text-muted"> <i [class.is-online]="(presenceService.onlineUsers$ | async).includes(post.createdBy)" class="fa fa-user mx-1"></i> {{ post.createdBy }}   -   {{ post.createdAt | date }} </h6>
         <p class="card-text">
             {{ post.content }}
         </p>
@@ -11,5 +11,6 @@
         <div class="right">{{ post.numberOfComments }} Comments</div>
     </div>
     <div [ngClass]="{'hide': hideComments}" *ngFor="let comment of post.comments" class="card-footer text-muted"><strong> {{ comment.username }} </strong> - {{ comment.content }} </div>
+    <ng-content></ng-content>
 </div>
   

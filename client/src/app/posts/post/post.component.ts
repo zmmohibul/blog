@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { PresenceService } from 'src/app/auth/presence.service';
 import { Post } from 'src/app/interfaces/post';
 
 @Component({
@@ -10,7 +11,7 @@ export class PostComponent implements OnInit {
   @Input() post: Post;
   @Output() commentsClick = new EventEmitter<boolean>();
   hideComments = true;
-  constructor() { }
+  constructor(public presenceService: PresenceService) { }
 
   ngOnInit(): void {
   }

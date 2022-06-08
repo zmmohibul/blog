@@ -1,16 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, of, tap } from 'rxjs';
+import { BehaviorSubject, map, of, tap } from 'rxjs';
 import { PostQueryParameters } from '../helpers/postQueryParameter';
-import { QueryParameters } from '../helpers/queryParameters';
 import { PagedResult } from '../interfaces/pagedResult';
+import { Post } from '../interfaces/post';
+import { PostComment } from '../interfaces/postComment';
 
-export interface Post {
-  id: number;
-  title: string;
+interface CreateCommentDto {
   content: string;
-  createdAt: Date;
-  createdBy: string;
 }
 
 @Injectable({
@@ -18,10 +15,10 @@ export interface Post {
 })
 export class PostService {
   rootUrl = 'https://localhost:5001/api/posts';
+  commentRootUrl = 'https://localhost:5001/api/postcomments';
   posts: Post[] = [];
   public totalNumberOfPosts = 0;
   postQueryParameter = new PostQueryParameters();
-  allFetched = false;
 
   constructor(private http: HttpClient) { }
 
@@ -45,42 +42,14 @@ export class PostService {
     }
   }
 
-  getAllPosts(queryParameters: PostQueryParameters) {
-    let numberOfPostsAfterFetching = queryParameters.pageNumber * queryParameters.pageSize;
-    if (this.posts.length >= numberOfPostsAfterFetching) {
-      return of(this.posts);
-    } else {
-      return this.http.get<PagedResult<Post>>(`${this.rootUrl}?pageNumber=${queryParameters.pageNumber}&pageSize=${queryParameters.pageSize}`)
-        .pipe(
-          map((pagedResult: PagedResult<Post>) => {
-            this.posts.push(...pagedResult.data);
-            this.totalNumberOfPosts = pagedResult.count;
-            return pagedResult.data;
-          })
-        );
-    }
-
-    // check if posts has already been fetched before making new get request
-    // calculate total number of posts after making new get request
-    // if the posts.length greater than that number then posts already been fetched
-    // 
-
-
-    // return this.http.get<PagedResult<Post>>(`${this.rootUrl}?pageNumber=${queryParameters.pageNumber}&pageSize=${queryParameters.pageSize}`)
-    //     .pipe(
-    //       tap((pagedResult: PagedResult<Post>) => {
-    //         // this.allPosts = pagedResult.data;
-    //       })
-    //     );
-    // if (this.allPosts.length === 0) {
-    //   return this.http.get<PagedResult<Post>>(`${this.rootUrl}`)
-    //     .pipe(
-    //       tap((pagedResult: PagedResult<Post>) => {
-    //         this.allPosts = pagedResult.data;
-    //       })
-    //     );
-    // }
-    
-    // return of(this.allPosts);
+  createPost(comment: CreateCommentDto, postId: number) {
+    return this.http.post(`${this.commentRootUrl}/post/${postId}`, comment)
+      .pipe(tap((comment: PostComment) => {
+        this.posts.forEach((post => {
+          if (post.id === postId) {
+            post.comments.push(comment);
+          }
+        }))
+      }))
   }
 }

@@ -20,7 +20,7 @@ POST https://localhost:5001/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "aman",
+    "username": "sadek",
     "password": "P@ssw0rd"
 }
 
@@ -53,13 +53,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 }
 
 ### Get All Posts
-GET https://localhost:5001/api/posts?pageSize=3&pageNumber=1
+GET https://localhost:5001/api/posts?pageSize=8&pageNumber=1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwMTIzMiwiZXhwIjoxNjU1MDA2MDMyLCJpYXQiOjE2NTQ0MDEyMzJ9.VzPOZr0nCGeq1636VsTMxlfI3XD1IXS4pMAy7RnuCMzDQP6-g9iFSyE7TmI4tzd_TxO4AX-OBhIDr3J_fmI0QA
 
 
 ### Get Post By Id
-GET https://localhost:5001/api/posts/33
+GET https://localhost:5001/api/posts/8
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZnphbCIsIm5iZiI6MTY1NDQwNzYyNCwiZXhwIjoxNjU1MDEyNDI0LCJpYXQiOjE2NTQ0MDc2MjR9.1cJStSsi1EmN-UiqnQFZQolttgAEVs_C7Id4BeTUVGnV9O_6ilbWZfrGGl2Bom5yYAKRD2Zm7TDqNe1QDTItcA
 
@@ -76,10 +76,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuY
 
 ### POST COMMENT CONTROLLER
 ### Create New Comment
-POST https://localhost:5001/api/postcomments/post/33
+POST https://localhost:5001/api/postcomments/post/8
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIxMCIsInVuaXF1ZV9uYW1lIjoiYW1hbiIsIm5iZiI6MTY1NDQ4OTI0MCwiZXhwIjoxNjU1MDk0MDQwLCJpYXQiOjE2NTQ0ODkyNDB9.far7Fku4f_Ym7oa6vO_ul1A7Phm9muLUfoX3_DKnbMc5PefqWCg6VLa4YnfkOVLVjU3Ry3IsxUiEFD5ZIiNkCw
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwidW5pcXVlX25hbWUiOiJzYWRlayIsIm5iZiI6MTY1NDU2OTkzMiwiZXhwIjoxNjU1MTc0NzMyLCJpYXQiOjE2NTQ1Njk5MzJ9.wLGJXAcpE9qdiu7L90C_g4Cjk1Q_dSkP4ZkW4kNrOpUOhqHLZyQreAlzBI6FWxawIhMbObsJJAV1w4vbR3wsOw
 
 {
-    "content": "This my friend, is splendid..."
+    "content": "beautiful"
 }

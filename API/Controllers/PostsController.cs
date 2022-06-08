@@ -1,3 +1,4 @@
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dtos;
@@ -30,11 +31,7 @@ namespace API.Controllers
 
             if (!result.IsSuccesful)
             {
-                var error = new Error{StatusCode = result.StatusCode, Message = result.ErrorMessage};
-                if (result.StatusCode == 404)
-                {
-                    return NotFound(error);
-                }
+                HandleUnsuccessfulResult(result);
             }
 
             return Ok(result.Data);
@@ -56,7 +53,7 @@ namespace API.Controllers
             
             if (!result.IsSuccesful) 
             {
-                return HandleUnsuccessfulResult(result);
+                HandleUnsuccessfulResult(result);
             }
 
             return Ok(result.Data);
@@ -69,7 +66,7 @@ namespace API.Controllers
             
             if (!result.IsSuccesful) 
             {
-                return HandleUnsuccessfulResult(result);
+                HandleUnsuccessfulResult(result);
             }
 
             return NoContent();

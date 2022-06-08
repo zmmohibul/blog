@@ -26,6 +26,7 @@ namespace API.Data.Repositories
 
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.Equals(username));
 
+
             if (user == null)
             {
                 return ReturnResults<PostCommentDto>.UnauthorizedUserResult();
@@ -39,7 +40,7 @@ namespace API.Data.Repositories
                 CreatedAt = DateTime.Now
             };
 
-            _context.Add(postComment);
+            _context.PostComments.Add(postComment);
             await _context.SaveChangesAsync();
 
             return new Result<PostCommentDto>

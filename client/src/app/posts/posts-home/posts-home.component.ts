@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService, User } from 'src/app/auth/auth.service';
 import { PostQueryParameters } from 'src/app/helpers/postQueryParameter';
 import { PagedResult } from 'src/app/interfaces/pagedResult';
-import { Post, PostService } from '../post.service';
+import { Post } from 'src/app/interfaces/post';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'app-posts-home',
@@ -14,6 +16,10 @@ export class PostsHomeComponent implements OnInit {
   result: PagedResult<Post>;
   postQueryParameters = new PostQueryParameters();
   hideComments = true;
+
+  commentForm = new FormGroup({
+    content: new FormControl('', [Validators.required])
+  })
 
   constructor(private authService: AuthService, private postService: PostService) { }
 
@@ -40,5 +46,15 @@ export class PostsHomeComponent implements OnInit {
 
   onScrollUp() {
 
+  }
+
+  onCommentFormSubmit(postId: number) {
+    if (this.commentForm.invalid) {
+      return;
+    }
+
+    this.postService.createPost({ content: this.commentForm.get('content').value }, postId).subscribe(response => {
+      console.log(response);
+    })
   }
 }
